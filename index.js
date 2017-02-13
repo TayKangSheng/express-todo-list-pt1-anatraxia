@@ -19,3 +19,12 @@ app.listen(port, function () {
 })
 
 app.use('/todos', todosController)
+
+app.use(function (err, req, res, next) {
+  if (res.headersSent) {
+    return next(err)
+  }
+  res.send({
+    error: err.message
+  })
+})
